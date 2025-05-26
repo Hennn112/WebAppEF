@@ -1,0 +1,26 @@
+@model WebAppEF.Models.ProductCategories
+
+@{
+    ViewData["Title"] = "Edit Categori Produk";
+}
+
+<h2 class="my-4">Edit Categori Produk</h2>
+
+<form asp-controller="ProductCategories" asp-action="Edit" asp-route-itemid="@Model.Id" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Nama Produk</label>
+        <input asp-for="Name" class="form-control" required />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+        <a asp-action="Index" class="btn btn-secondary">Kembali</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

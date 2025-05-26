@@ -1,0 +1,10 @@
+@model WebAppEF.Models.AppUser
+
+@if (Model != null && !string.IsNullOrEmpty(Model.ProfilePicturePath))
+{
+    <img src="~/@Model.ProfilePicturePath" alt="user" class="rounded-circle" width="31" />
+}
+else
+{
+    <img src="~/Images/profile.png" alt="user" class="rounded-circle" width="31" />
+}

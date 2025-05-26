@@ -1,0 +1,46 @@
+@model WebAppEF.Models.Product
+
+@{
+    ViewData["Title"] = "Tambah Produk";
+    var categories = ViewBag.Categories as List<WebAppEF.Models.ProductCategories>;
+}
+
+<h2 class="my-4">Tambah Produk Baru</h2>
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="mb-3">
+        <label for="Name" class="form-label">Nama Produk</label>
+        <input asp-for="Name" class="form-control" required />
+    </div>
+
+    <div class="mb-3">
+        <label for="ProductCategoryId" class="form-label">Kategori</label>
+        <select asp-for="ProductCategoryId" class="form-control" required="@categories != null" >
+            <option value="">-- Pilih Kategori --</option>
+            @if (categories == null || !categories.Any())
+            {
+                <option value="">Tidak ada kategori tersedia</option>
+            }
+            else
+            {
+                @foreach (var category in categories)
+                {
+                    <option value="@category.Id">@category.Name</option>
+                }
+            }
+        </select>
+        <span asp-validation-for="ProductCategoryId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label for="Image" class="form-label">Gambar Produk</label>
+        <input type="file" name="ImageFile" class="form-control" accept="image/*" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Simpan</button>
+    <a asp-action="Index" class="btn btn-secondary">Kembali</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

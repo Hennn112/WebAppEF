@@ -1,0 +1,37 @@
+@model List<WebAppEF.Models.ProductCategories>
+
+@{
+    ViewData["Title"] = "Daftar Categori";
+}
+
+<h2 class="my-4">Daftar Categori</h2>
+<div class="text-end mb-3">
+    <a asp-controller="ProductCategories" asp-action="Create" class="btn btn-primary">Tambah</a>
+</div>
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Nama Categori</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var categories in Model)
+        {
+            @if (categories.IsDeleted){
+                continue;
+            }else{
+                <tr>
+                    <td>@categories.Name</td>
+                    <td>
+                        <a asp-controller="ProductCategories" asp-action="Edit" asp-route-id="@categories.Id" class="btn btn-success mx-1">Update</a>
+                        <form asp-controller="ProductCategories" asp-action="SoftDelete" asp-route-id="@categories.Id" method="post" class="d-inline"
+                            onsubmit="return confirm('Apakah Anda yakin ingin menghapus categori ini?');">
+                            <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

@@ -1,0 +1,60 @@
+@model WebAppEF.Models.Product
+
+@{
+    ViewData["Title"] = "Edit Produk";
+    var categories = ViewBag.Categories as List<WebAppEF.Models.ProductCategories>;
+}
+
+<h2 class="my-4">Edit Produk</h2>
+
+<form asp-controller="Product" asp-action="Edit" asp-route-id="@Model.Id" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Id" />
+
+    <div asp-validation-summary="All" class="text-danger mb-3"></div>
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Nama Produk</label>
+        <input asp-for="Name" class="form-control" required />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ProductCategoryId" class="form-label">Kategori</label>
+        <select asp-for="ProductCategoryId" class="form-control" required>
+            <option value="">-- Pilih Kategori --</option>
+            @if (categories == null || !categories.Any())
+            {
+                <option value="">Tidak ada kategori tersedia</option>
+            }
+            else
+            {
+                @foreach (var category in categories)
+                {
+                    <option value="@category.Id" selected="@(category.Id == Model.ProductCategoryId)">
+                        @category.Name
+                    </option>
+                }
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Gambar Produk</label><br />
+        @if (!string.IsNullOrEmpty(Model.Image))
+        {
+            <img src="~/@Model.Image" alt="Gambar Produk" width="120" class="mb-2" />
+        }
+        else
+        {
+            <span class="text-muted">Belum ada gambar</span>
+        }
+        <input type="file" name="ImageFile" class="form-control" />
+    </div>
+
+    <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+        <a asp-action="Index" class="btn btn-secondary">Kembali</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

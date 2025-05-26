@@ -1,0 +1,51 @@
+@model List<WebAppEF.Models.Product>
+
+@{
+    ViewData["Title"] = "Daftar Produk";
+}
+
+<h2 class="my-4">Daftar Produk</h2>
+<div class="text-end mb-3">
+    <a asp-controller="Product" asp-action="Create" class="btn btn-primary">Tambah</a>
+</div>
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Nama Produk</th>
+            <th>Kategori</th>
+            <th>Gambar</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            @if (product.IsDeleted){
+                continue;
+            }else{
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.Category?.Name</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(product.Image))
+                        {
+                            <img src="~/@product.Image" alt="@product.Name" width="100" />
+                        }
+                        else
+                        {
+                            <span class="text-muted">Belum ada gambar</span>
+                        }
+                    </td>
+                    <td>
+                        <a asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id" class="btn btn-success mx-1">Update</a>
+                        <form asp-controller="Product" asp-action="SoftDelete" asp-route-id="@product.Id" method="post" class="d-inline"
+                            onsubmit="return confirm('Apakah Anda yakin ingin menghapus produk ini?');">
+                            <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+                        </form>
+
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

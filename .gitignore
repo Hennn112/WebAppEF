@@ -1,0 +1,35 @@
+# Build results
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# VS Code settings
+.vscode/
+
+# SQLite database
+app.db
+*.sqlite
+*.sqlite3
+
+# EF Core tools & migration snapshots (keep Migrations folder)
+*.db-shm
+*.db-wal
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.*
+
+# Rider
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db

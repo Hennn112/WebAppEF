@@ -1,0 +1,68 @@
+@model WebAppEF.Models.AppUser
+
+@{
+    ViewData["Title"] = "Profil Saya";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow-lg">
+            <div class="card-body">
+                <h2 class="text-center mb-4">Profil Saya</h2>
+
+                <form asp-controller="Profile" asp-action="Update" method="post" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="Id" />
+
+                    <div class="mb-3">
+                        <label asp-for="FullName" class="form-label">Full Name</label>
+                        <input asp-for="FullName" class="form-control" required />
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label">Email</label>
+                        <input asp-for="Email" class="form-control" required />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="PasswordHash" class="form-label">Password Baru (opsional)</label>
+                        <input asp-for="PasswordHash" class="form-control" type="password" placeholder="Biarkan kosong jika tidak ingin mengubah" />
+                        <span asp-validation-for="PasswordHash" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Foto Profil</label><br />
+                        @if (!string.IsNullOrEmpty(Model.ProfilePicturePath))
+                        {
+                            <img src="~/@Model.ProfilePicturePath" alt="Foto Profil" width="120" class="mb-2 rounded" />
+                        }
+                        else
+                        {
+                            <p class="text-muted">Belum ada foto</p>
+                        }
+                        <input type="file" name="ImageFile" class="form-control" />
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">Kembali</a>
+                    </div>
+
+                    @if (ViewBag.Message != null)
+                    {
+                        <div class="alert alert-success mt-3 text-center">
+                            @ViewBag.Message
+                        </div>
+                    }
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="alert alert-danger mt-3 text-center">
+                            @ViewBag.Error
+                        </div>
+                    }
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
