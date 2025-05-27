@@ -22,6 +22,7 @@
                         <h2 class="text-center mb-4">Login</h2>
 
                         <form asp-controller="Auth" asp-action="Login" method="post">
+                            <div asp-validation-summary="All" class="text-danger"></div>
                             <div class="mb-3">
                                 <label for="username" class="form-label">Username</label>
                                 <input type="text" class="form-control" name="username" id="username" required />

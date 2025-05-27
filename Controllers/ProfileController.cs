@@ -23,6 +23,11 @@ public class ProfileController : Controller
     [Route("profile")]
     public async Task<IActionResult> Index()
     {
+        var UserId = _userManager.GetUserId(User);
+        if (UserId == null)
+        {
+            return RedirectToAction("Login","Auth");
+        }
         var user = await _userManager.GetUserAsync(User);
         if (user == null) return NotFound();
 

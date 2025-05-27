@@ -26,6 +26,11 @@ public class ProductController : Controller
     [HttpGet]
     public IActionResult Index()
     {
+        var UserId = _userManager.GetUserId(User);
+        if (UserId == null)
+        {
+            return RedirectToAction("Login","Auth");
+        }
         var products = _context.Products
         .Include(p => p.Category)
         .Include(p => p.User)
@@ -39,6 +44,11 @@ public class ProductController : Controller
     [Route("products/create")]
     public IActionResult Create()
     {
+        var UserId = _userManager.GetUserId(User);
+        if (UserId == null)
+        {
+            return RedirectToAction("Login","Auth");
+        }
         ViewBag.Categories = _context.ProductCategories
                                     .Where(c => !c.IsDeleted)
                                     .ToList();
@@ -97,6 +107,11 @@ public class ProductController : Controller
     [Route("products/edit/{id}")]
     public IActionResult Edit(int id)
     {
+        var UserId = _userManager.GetUserId(User);
+        if (UserId == null)
+        {
+            return RedirectToAction("Login","Auth");
+        }
         var product = _context.Products.Find(id);
 
         if (product == null || product.IsDeleted) return NotFound();

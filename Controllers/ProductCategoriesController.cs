@@ -23,6 +23,11 @@ public class ProductCategoriesController : Controller
     [HttpGet]
     public IActionResult Index()
     {
+        var UserId = _userManager.GetUserId(User);
+        if (UserId == null)
+        {
+            return RedirectToAction("Login","Auth");
+        }
         var categories = _context.ProductCategories
         .ToList();
         return View(categories);
@@ -32,6 +37,11 @@ public class ProductCategoriesController : Controller
     [Route("product-categories/create")]
     public IActionResult Create()
     {
+        var UserId = _userManager.GetUserId(User);
+        if (UserId == null)
+        {
+            return RedirectToAction("Login","Auth");
+        }
         return View();
     }
 
@@ -65,6 +75,11 @@ public class ProductCategoriesController : Controller
     [Route("product-categories/edit/{id}")]
     public IActionResult Edit(int id)
     {
+        var UserId = _userManager.GetUserId(User);
+        if (UserId == null)
+        {
+            return RedirectToAction("Login","Auth");
+        }
         var category = _context.ProductCategories.Find(id);
         if (category == null) return NotFound();
 
