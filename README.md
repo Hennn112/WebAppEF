@@ -11,6 +11,6 @@ dotnet ef database update
 dotnet run
 ```
 3. Login menggunakan
-   username:admin
+   email:admin@gmail.com
    password:Admin_123
             
