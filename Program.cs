@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SendingEmails;
 using WebAppEF.Data;
 using WebAppEF.Models;
 
@@ -9,13 +10,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite("Data Source=app.db"));
 
+builder.Services.AddSession();
+
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 // Setup Identity dengan AppUser dan Role
 builder.Services.AddIdentity<AppUser, IdentityRole>()
-    .AddEntityFrameworkStores<AppDbContext>();
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddDefaultTokenProviders();
 
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+app.UseSession();
 
 using (var scope = app.Services.CreateScope())
 {
@@ -38,7 +44,7 @@ using (var scope = app.Services.CreateScope())
 
     // Seed Admin User
     string adminUserName = "admin";
-    string adminEmail = "admin@example.com";
+    string adminEmail = "admin@gmail.com";
     string adminPassword = "Admin_123";
 
     var adminUser = await userManager.FindByNameAsync(adminUserName);

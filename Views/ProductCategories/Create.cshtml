@@ -4,10 +4,10 @@
     ViewData["Title"] = "Tambah Categori Produk";
 }
 
-<h2 class="my-4">Tambah Categori Baru</h2>
+<h1 class="my-4">Tambah Kategori Produk</h1>
 <form asp-action="Create" method="post" enctype="multipart/form-data">
     <div class="mb-3">
-        <label for="Name" class="form-label">Nama Categori</label>
+        <label for="Name" class="form-label">Nama Kategori</label>
         <input asp-for="Name" class="form-control" required />
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>

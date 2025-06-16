@@ -1,0 +1,48 @@
+@{
+    ViewData["Title"] = "Verifikasi Email";
+}
+
+<h2 class="mb-4">Verifikasi Email</h2>
+
+<!-- Alert sukses/gagal -->
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<!-- Form input 4 digit kode -->
+<form asp-action="VerifyCode" asp-controller="Auth" method="post">
+    <div class="mb-3">
+        <label for="code" class="form-label">Masukkan Kode Verifikasi</label>
+        <div class="d-flex gap-2">
+            <input type="text" maxlength="1" name="code1" class="form-control text-center" required />
+            <input type="text" maxlength="1" name="code2" class="form-control text-center" required />
+            <input type="text" maxlength="1" name="code3" class="form-control text-center" required />
+            <input type="text" maxlength="1" name="code4" class="form-control text-center" required />
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Verifikasi</button>
+</form>
+
+<!-- Optional: auto-move ke kolom selanjutnya -->
+@section Scripts {
+    <script>
+        document.querySelectorAll('input[type="text"]').forEach((input, idx, arr) => {
+            input.addEventListener('input', () => {
+                if (input.value.length === 1 && idx < arr.length - 1) {
+                    arr[idx + 1].focus();
+                }
+            });
+        });
+    </script>
+}

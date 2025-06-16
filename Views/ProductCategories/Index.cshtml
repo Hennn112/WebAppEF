@@ -1,17 +1,15 @@
 @model List<WebAppEF.Models.ProductCategories>
-
 @{
     ViewData["Title"] = "Daftar Categori";
 }
-
-<h2 class="my-4">Daftar Categori</h2>
+<h1 class="my-2">Daftar Kategori Produk</h1>
 <div class="text-end mb-3">
     <a asp-controller="ProductCategories" asp-action="Create" class="btn btn-primary">Tambah</a>
 </div>
-<table class="table table-bordered table-striped">
-    <thead class="table-dark">
+<table id="myTable" class="hover cell-border">
+    <thead>
         <tr>
-            <th>Nama Categori</th>
+            <th>Nama Kategori</th>
             <th>Aksi</th>
         </tr>
     </thead>

@@ -107,6 +107,7 @@ public class ProductController : Controller
     [Route("products/edit/{id}")]
     public IActionResult Edit(int id)
     {
+        
         var UserId = _userManager.GetUserId(User);
         if (UserId == null)
         {
@@ -124,6 +125,8 @@ public class ProductController : Controller
     [Route("products/edit/{id}")]
     public async Task<IActionResult> Edit(Product product, IFormFile? ImageFile)
     {
+        ModelState.Remove(nameof(Product.UserId));
+        ModelState.Remove(nameof(Product.User));
         var UserId = _userManager.GetUserId(User);
         if (UserId == null)
         {

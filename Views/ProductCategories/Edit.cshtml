@@ -4,13 +4,13 @@
     ViewData["Title"] = "Edit Categori Produk";
 }
 
-<h2 class="my-4">Edit Categori Produk</h2>
+<h1 class="my-4">Edit Kategori Produk</h1>
 
 <form asp-controller="ProductCategories" asp-action="Edit" asp-route-itemid="@Model.Id" method="post" enctype="multipart/form-data">
     <input type="hidden" asp-for="Id" />
 
     <div class="mb-3">
-        <label asp-for="Name" class="form-label">Nama Produk</label>
+        <label asp-for="Name" class="form-label">Nama Kategori</label>
         <input asp-for="Name" class="form-control" required />
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>

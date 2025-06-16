@@ -1,74 +1,88 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var currentPath = Context.Request.Path.ToString().ToLower();
+}
+<!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@ViewData["Title"] - WebAppEF</title>
-    <script type="importmap"></script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="~/fonts/icomoon/style.css" />
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.css" />
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WebAppEF.styles.css" asp-append-version="true" />
-</head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <p class="navbar-brand" asp-area="">WebAppEF</p>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Produk</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ProductCategories" asp-action="Index">Categori Produk</a>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav float-end"></ul>
-                        <!-- ============================================================== -->
-                        <!-- User profile and search -->
-                        <!-- ============================================================== -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic"
-                                asp-action="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                @await Component.InvokeAsync("UserProfile")
+  </head>
+  <body>
 
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end user-dd animated"
-                                aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" asp-controller="Profile" asp-action="Index"><i class="ti-user m-r-5 m-l-5"></i>
-                                    My Profile</a>
-                                <a class="dropdown-item" asp-controller="Auth" asp-action="Logout"><i
-                                        class="ti-wallet m-r-5 m-l-5"></i>
-                                    Logout</a>
-                            </ul>
-                        </li>
-                        <!-- ============================================================== -->
-                        <!-- User profile and search -->
-                        <!-- ============================================================== -->
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - WebAppEF - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <aside class="sidebar">
+      <div class="toggle">
+        <a href="#" class="burger js-menu-toggle" data-toggle="collapse" data-target="#main-navbar">
+          <span></span>
+        </a>
+      </div>
+      <div class="side-inner">
+        <div class="profile">
+            @await Component.InvokeAsync("UserProfile")
         </div>
+
+        <div class="nav-menu">
+          <ul>
+            <li class="@(currentPath.StartsWith("/products") ? "active" : "")">
+                <a asp-area="" asp-controller="Product" asp-action="Index">
+                    <span class="icon-shopping-cart" style="margin-right: 10px;"></span>Produk
+                </a>
+            </li>
+            <li class="@(currentPath.StartsWith("/product-categories") ? "active" : "")">
+                <a asp-area="" asp-controller="ProductCategories" asp-action="Index">
+                    <span class="icon-book" style="margin-right: 10px;"></span>Kategori Produk
+                </a>
+            </li>
+            <li><a asp-controller="Auth" asp-action="Logout"><span class="icon-sign-out" style="margin-right: 10px;"></span>Sign out</a></li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+    <div class="site-section">
+      <div class="container">
+          @RenderBody()
+      </div>
+    </div>
+    <footer class="border-top footer text-muted">
+      <div class="container">
+        &copy; 2025 - WebAppEF - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+      </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <!-- Scripts -->
+    <script src="~/js/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/main.js"></script>
+    <script>
+      $(document).ready(function () {
+          new DataTable('#myTable', {
+              responsive: true,
+              "oLanguage": {
+                "sSearch": "Cari:",
+                "sLengthMenu": "Tampilkan _MENU_ entri",
+                "sInfo": "Menampilkan _START_ hingga _END_ dari _TOTAL_ entri",
+                "sInfoEmpty": "Menampilkan 0 hingga 0 dari 0 entri",
+              }
+          });
+      });
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
-</body>
+  </body>
 </html>

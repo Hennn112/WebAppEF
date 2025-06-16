@@ -2,14 +2,22 @@
 
 @{
     ViewData["Title"] = "Daftar Produk";
+    var successMessage = TempData["Success"] as string;
 }
 
-<h2 class="my-4">Daftar Produk</h2>
+<h1 class="my-2">Daftar Produk</h1>
 <div class="text-end mb-3">
     <a asp-controller="Product" asp-action="Create" class="btn btn-primary">Tambah</a>
 </div>
-<table class="table table-bordered table-striped">
-    <thead class="table-dark">
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @successMessage
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+<table id="myTable" class="hover cell-border">
+    <thead>
         <tr>
             <th>Nama Produk</th>
             <th>Kategori</th>
@@ -42,7 +50,6 @@
                             onsubmit="return confirm('Apakah Anda yakin ingin menghapus produk ini?');">
                             <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
                         </form>
-
                     </td>
                 </tr>
             }

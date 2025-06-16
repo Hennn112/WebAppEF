@@ -41,7 +41,6 @@ public class ProfileController : Controller
         if (user == null) return NotFound();
 
         user.FullName = model.FullName;
-        user.Email = model.Email;
 
         if (!string.IsNullOrWhiteSpace(model.PasswordHash))
         {
@@ -49,7 +48,8 @@ public class ProfileController : Controller
             var result = await _userManager.ResetPasswordAsync(user, token, model.PasswordHash);
             if (!result.Succeeded)
             {
-                ViewBag.Error = "Gagal mengganti password";
+                var errorMessages = string.Join(" ", result.Errors.Select(e => e.Description));
+                ViewBag.Error = errorMessages;
                 return View("~/Views/Auth/Profile.cshtml", model);
             }
         }

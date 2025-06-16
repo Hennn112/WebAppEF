@@ -1,10 +1,23 @@
 @model WebAppEF.Models.AppUser
 
-@if (Model != null && !string.IsNullOrEmpty(Model.ProfilePicturePath))
-{
-    <img src="~/@Model.ProfilePicturePath" alt="user" class="rounded-circle" width="31" />
-}
-else
-{
-    <img src="~/Images/profile.png" alt="user" class="rounded-circle" width="31" />
-}
+    @if (Model != null && !string.IsNullOrEmpty(Model.ProfilePicturePath))
+    {
+        <img src="~/@Model.ProfilePicturePath" alt="user" class="img-fluid"/>
+    }
+    else
+    {
+        <img src="~/Images/profile.png" alt="user" class="img-fluid"/>
+    }
+    <h3 class="name">@Model.FullName <a asp-controller="Profile" asp-action="Index"><span class="icon-pencil mr-3"></span></a></h3>
+    @if (!Model.Verified)
+    {
+        <span class="country">Unverified</span>
+        <form asp-controller="Auth" asp-action="Verification" method="post" class="d-inline">
+            <input type="hidden" name="email" value="@Model.Email" />
+            <button type="submit" class="btn btn-link p-0">Verifikasi sekarang</button>
+        </form>
+    }
+    else
+    {
+        <span class="text-success">Verified</span>
+    }
